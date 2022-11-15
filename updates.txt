@@ -1,0 +1,3 @@
+Active: Unban Command does not work (possible that the command does NOT exist.)
+
+Closed: Kick Command Error Ln: 23, Ban command unresponsive.

@@ -1,26 +1,48 @@
 import nextcord
 from nextcord.ext import commands
 
-intents = nextcord.intents.default()
+intents = nextcord.Intents.default()
 intents = nextcord.Intents().all()
 bot = commands.Bot(command_prefix="g.", intents=intents)
 
 @bot.event
 async def on_ready():
-  print(f"(bot.user.name) is ready!")
+  print(f"{bot.user.name} is operational!")
 
 logging = True
 logschannel = 1027025704568754217
 
-@bot.slash.command()
+@bot.slash_command()
 async def kick(interaction: nextcord.Interaction, user: nextcord.Member, reason: str):
-  if not interaction.user.guild.permissions.administrator:
-    await interaction.response.send_message("You are not authorized to run this command", epheneral-True)
-    else:
-      await interaction.response.send_message(f"Kicked by (user.mention", epheneral.True)
+  if not interaction.user.guild_permissions.administrator:
+    await interaction.response.send_message("You are not authorized to run this command.")
+  else:
+      await interaction.response.send_message(f"Kicked by {interaction.user.mention}")
       if logging is True:
-        log_channel = bot.get.channel(logschannel)
-        await log_channel.sent(f"(user.mention) was kicked by (interaction.user.mention"), epheneral.True)
+        log_channel = bot.get_channel(logschannel)
+        await log_channel.send(f"{user.mention} was kicked by {interaction.user.mention} for {reason}")
+        await user.kick(reason=reason)
 
-bot.run("MTAyNzAwOTU2MDA5Mjg3Njg1MA.GxPG1U.i4P9uRMCM2GIdTKmLpN9rb6oPPfqsecN-Byaj8")
+@bot.slash_command()
+async def ban(interaction: nextcord.Interaction, user: nextcord.Member, reason: str):
+    if not interaction.user.guild_permissions.administrator:
+       await interaction.response.send_message("You are not authorized to run this command")
+    else:
+      await interaction.response.send_message(f"Banned by {interaction.user.mention}")
+      if logging is True:
+        log_channel = bot.get_channel(logschannel)
+        await log_channel.send(f"{user.mention} was banned by {interaction.user.mention} for {reason}")
+        await user.ban(reason=reason)
 
+@bot.slash_command()
+async def unban(interaction: nextcord.Interaction, user: nextcord.Member, reason: str):
+  if not interaction.user.guild_permissions.administrator:
+    await interaction.response.send_message("You are not authorized to run this command.")
+  else:
+      await interaction.guild.unban(nextcord.Object(id=user.id), reason=reason)
+      if logging is True:
+         log_channel = bot.get_channel(logschannel)
+         await log_channel.send(f"{user.mention} was unbanned by {interaction.user.mention}")
+         await user.unban(reason=reason)
+
+bot.run("MTAyNzAwOTU2MDA5Mjg3Njg1MA.GShNGN.Q_0RdzqgraGwy8KtdNG1sfXCWnqBgVcR66gI84")
