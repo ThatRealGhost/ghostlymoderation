@@ -10,7 +10,7 @@ async def on_ready():
   print(f"{bot.user.name} is operational!")
 
 logging = True
-logschannel = 1027025704568754217
+logschannel = (#copy id and put logs channel id here.)
 
 @bot.slash_command()
 async def kick(interaction: nextcord.Interaction, user: nextcord.Member, reason: str):
@@ -45,4 +45,4 @@ async def unban(interaction: nextcord.Interaction, user: nextcord.Member, reason
          await log_channel.send(f"{user.mention} was unbanned by {interaction.user.mention}")
          await user.unban(reason=reason)
 
-bot.run("MTAyNzAwOTU2MDA5Mjg3Njg1MA.GShNGN.Q_0RdzqgraGwy8KtdNG1sfXCWnqBgVcR66gI84")
+bot.run("ID_TOKEN")
